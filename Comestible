@@ -1,0 +1,9 @@
+package com.mycompany.sistema_de_alimentos;
+
+/**
+ *
+ * @author Jose Miguel
+ */
+public interface Comestible {
+    void mostrarInformacion();
+}
