@@ -1,0 +1,21 @@
+package com.mycompany.sistema_de_alimentos;
+
+/**
+ *
+ * @author Jose Miguel
+ */
+public class Grasa extends Alimento {
+    public Grasa(String nombre, double calorias, double gramosPorPorcion) {
+        super(nombre, calorias, gramosPorPorcion);
+    }
+
+    @Override
+    public void mostrarInformacion() {
+        System.out.println("Grasa: " + Nombre + ", Calorías: " + Calorias + ", gramos: " + Gramos_Por_Porcion);
+    }
+
+    @Override
+    public String getCategoria() {
+        return "Grasas";
+    }
+}
