@@ -1,0 +1,11 @@
+package com.mycompany.sistema_de_alimentos;
+
+/**
+ *
+ * @author Jose Miguel
+ */
+public class Categoria_Invalida extends Exception {
+    public Categoria_Invalida(String Mensaje) {
+        super(Mensaje);
+    }
+}
