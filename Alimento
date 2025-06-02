@@ -1,0 +1,26 @@
+package com.mycompany.sistema_de_alimentos;
+
+/**
+ *
+ * @author Jose Miguel
+ */
+
+public abstract class Alimento implements Comestible {
+    protected String Nombre;
+    protected double Calorias;
+    protected double Gramos_Por_Porcion;
+
+    public Alimento(String nombre, double calorias, double gramosPorPorcion) {
+        this.Nombre = Nombre;
+        this.Calorias = Calorias;
+        this.Gramos_Por_Porcion = Gramos_Por_Porcion;
+    }
+
+    public void Editar(String nuevoNombre, double nuevasCalorias, double nuevosGramos) {
+        this.Nombre = nuevoNombre;
+        this.Calorias = nuevasCalorias;
+        this.Gramos_Por_Porcion = nuevosGramos;
+    }
+
+    public abstract String getCategoria();
+}
