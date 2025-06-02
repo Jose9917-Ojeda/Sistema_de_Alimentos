@@ -1,0 +1,21 @@
+package com.mycompany.sistema_de_alimentos;
+/**
+ *
+ * @author Jose Miguel
+ */
+
+public class Fruta_Verdura extends Alimento {
+    public Fruta_Verdura(String Nombre, double Calorias, double Gramos_Por_Porcion) {
+        super(Nombre, Calorias, Gramos_Por_Porcion);
+    }
+
+    @Override
+    public void mostrarInformacion() {
+        System.out.println("Fruta/Verdura: " + Nombre + ", Calorías: " + Calorias + ", gramos: " + Gramos_Por_Porcion);
+    }
+
+    @Override
+    public String getCategoria() {
+        return "Frutas y Verduras";
+    }
+}
