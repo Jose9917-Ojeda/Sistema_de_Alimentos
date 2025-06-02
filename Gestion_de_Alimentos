@@ -1,0 +1,57 @@
+package com.mycompany.sistema_de_alimentos;
+
+/**
+ *
+ * @author Jose Miguel
+ */
+import java.util.ArrayList;
+
+public class Gestion_de_Alimentos {
+    private ArrayList<Alimento> Lista_de_Alimentos;
+
+    public Gestion_de_Alimentos() {
+        Lista_de_Alimentos = new ArrayList<>();
+    }
+
+    public void añadirAlimento(Alimento alimento) throws Categoria_Invalida {
+        String cat = alimento.getCategoria();
+        String nombreLower = alimento.Nombre.toLowerCase();
+
+        if (cat.equals("Frutas y Verduras")) {
+            if (nombreLower.equals("aceite") || nombreLower.equals("mantequilla") || nombreLower.equals("pan")) {
+                throw new Categoria_Invalida("No puedes añadir grasas o hidratos a la categoría Frutas y Verduras.");
+            }
+        } else if (cat.equals("Grasas")) {
+            if (nombreLower.equals("manzana") || nombreLower.equals("tomate") || nombreLower.equals("uva") || nombreLower.equals("aguacate")) {
+                throw new Categoria_Invalida("No puedes añadir frutas a la categoría Grasas.");
+            }
+        } else if (cat.equals("Hidratos de Carbono")) {
+            if (nombreLower.equals("manzana") || nombreLower.equals("tomate") || nombreLower.equals("uva") || nombreLower.equals("aguacate")) {
+                throw new Categoria_Invalida("No puedes añadir frutas a la categoría Hidratos de Carbono.");
+            }
+        }
+
+        Lista_de_Alimentos.add(alimento);
+    }
+
+    public void Eliminar_Alimento(int Indice) {
+        if (Indice >= 0 && Indice < Lista_de_Alimentos.size()) {
+            Lista_de_Alimentos.remove(Indice);
+        }
+    }
+
+    public void Editar_Alimento(int indice, String nuevoNombre, double nuevasCalorias, double nuevosGramos) {
+        if (indice >= 0 && indice < Lista_de_Alimentos.size()) {
+            Lista_de_Alimentos.get(indice).Editar(nuevoNombre, nuevasCalorias, nuevosGramos);
+            
+        }
+    }
+
+    public ArrayList<Alimento> getListaAlimentos() {
+        return Lista_de_Alimentos;
+    }
+
+    void Eliminar_Alimento(String nom) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+}
