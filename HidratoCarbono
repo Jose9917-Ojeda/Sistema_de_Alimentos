@@ -1,0 +1,20 @@
+package com.mycompany.sistema_de_alimentos;
+
+/**
+ *
+ * @author Jose Miguel
+ */
+public class HidratoCarbono extends Alimento {
+    public HidratoCarbono(String nombre, double calorias, double gramosPorPorcion) {
+        super(nombre, calorias, gramosPorPorcion);
+    }
+    @Override
+    public void mostrarInformacion() {
+        System.out.println("Hidrato de Carbono: " + Nombre + ", Calorías: " + Calorias + ", gramos: " + Gramos_Por_Porcion);
+    }
+
+    @Override
+    public String getCategoria() {
+        return "Hidratos de Carbono";
+    }
+}
