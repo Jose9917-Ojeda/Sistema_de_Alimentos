@@ -1,0 +1,147 @@
+package com.mycompany.sistema_de_alimentos;
+import javax.swing.*;
+import java.awt.*;
+/**
+ *
+ * @author Jose Miguel
+ */
+
+
+public class Gestion_AlimentosFrame extends JFrame {
+    private Gestion_de_Alimentos Gestion_de_Alimentos;
+
+    private JComboBox<String> CategoriaCombo;
+    private JTextField NombreField, CaloriasField, GramosField;
+    private JButton AñadirBtn, EditarBtn, EliminarBtn;
+    private JList<String> Lista_de_AlimentosUI;
+    private DefaultListModel<String> Modelo_Lista;
+
+    public Gestion_AlimentosFrame() {
+        Gestion_de_Alimentos = new Gestion_de_Alimentos();
+
+        setTitle("Gestión de Alimentos");
+        setSize(600, 400);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setLocationRelativeTo(null);
+        setLayout(new BorderLayout());
+
+             JPanel panelEntrada = new JPanel(new GridLayout(5, 2));
+
+        panelEntrada.add(new JLabel("Categoría:"));
+        CategoriaCombo = new JComboBox<>(new String[] {"Frutas y Verduras", "Grasas", "Hidratos de Carbono"});
+        panelEntrada.add(CategoriaCombo);
+
+        panelEntrada.add(new JLabel("Nombre:"));
+        NombreField = new JTextField();
+        panelEntrada.add(NombreField);
+
+        panelEntrada.add(new JLabel("Calorías:"));
+        CaloriasField = new JTextField();
+        panelEntrada.add(CaloriasField);
+
+        panelEntrada.add(new JLabel("Gramos por porción:"));
+        GramosField = new JTextField();
+        panelEntrada.add(GramosField);
+
+        AñadirBtn = new JButton("Añadir");
+        panelEntrada.add(AñadirBtn);
+
+        EditarBtn = new JButton("Editar");
+        panelEntrada.add(EditarBtn);
+
+        EliminarBtn = new JButton("Eliminar");
+        panelEntrada.add(EliminarBtn);
+
+        add(panelEntrada, BorderLayout.NORTH);
+
+       
+        Modelo_Lista = new DefaultListModel<>();
+        Lista_de_AlimentosUI = new JList<>(Modelo_Lista);
+        add(new JScrollPane(Lista_de_AlimentosUI), BorderLayout.CENTER);
+
+        
+        AñadirBtn.addActionListener(e -> {
+            try {
+                String categoria = (String) CategoriaCombo.getSelectedItem();
+                String nombre = NombreField.getText();
+                double calorias = Double.parseDouble(CaloriasField.getText());
+                double gramos = Double.parseDouble(GramosField.getText());
+
+                Alimento alimento;
+
+                switch (categoria) {
+                    case "Frutas y Verduras":
+                        alimento = new Fruta_Verdura(nombre, calorias, gramos);
+                        break;
+                    case "Grasas":
+                        alimento = new Grasa(nombre, calorias, gramos);
+                        break;
+                    case "Hidratos de Carbono":
+                        alimento = new HidratoCarbono(nombre, calorias, gramos);
+                        break;
+                    default:
+                        throw new Exception("Categoría no válida");
+                }
+
+                Gestion_de_Alimentos.añadirAlimento(alimento);
+                actualizarLista();
+                limpiarCampos();
+
+            } catch (Categoria_Invalida ex) {
+                JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(this, "Ingrese valores numéricos válidos.", "Error", JOptionPane.ERROR_MESSAGE);
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        });
+
+        EliminarBtn.addActionListener(e -> {
+            int selectedIndex = Lista_de_AlimentosUI.getSelectedIndex();
+            if (selectedIndex != -1) {
+                Gestion_de_Alimentos.Eliminar_Alimento(selectedIndex);
+                actualizarLista();
+            }
+        });
+
+        EditarBtn.addActionListener(e -> {
+            int selectedIndex = Lista_de_AlimentosUI.getSelectedIndex();
+            if (selectedIndex != -1) {
+                try {
+                    String nuevoNombre = NombreField.getText();
+                    double nuevasCalorias = Double.parseDouble(CaloriasField.getText());
+                    double nuevosGramos = Double.parseDouble(GramosField.getText());
+                    Gestion_de_Alimentos.Editar_Alimento(selectedIndex, nuevoNombre, nuevasCalorias, nuevosGramos);
+                    actualizarLista();
+                    limpiarCampos();
+                } catch (NumberFormatException ex) {
+                    JOptionPane.showMessageDialog(this, "Ingrese valores numéricos válidos.", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        });
+
+        Lista_de_AlimentosUI.addListSelectionListener(e -> {
+            int index = Lista_de_AlimentosUI.getSelectedIndex();
+            if (index != -1) {
+                Alimento a = Gestion_de_Alimentos.getListaAlimentos().get(index);
+                CategoriaCombo.setSelectedItem(a.getCategoria());
+                NombreField.setText(a.Nombre);
+                CaloriasField.setText(String.valueOf(a.Calorias));
+                GramosField.setText(String.valueOf(a.Gramos_Por_Porcion));
+            }
+        });
+    }
+
+    private void actualizarLista() {
+        Modelo_Lista.clear();
+        for (Alimento a : Gestion_de_Alimentos.getListaAlimentos()) {
+            Modelo_Lista.addElement(a.getCategoria() + ": " + a.Nombre);
+        }
+    }
+
+    private void limpiarCampos() {
+        NombreField.setText("");
+        CaloriasField.setText("");
+        GramosField.setText("");
+    }
+}
