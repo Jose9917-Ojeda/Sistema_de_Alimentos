@@ -1,0 +1,45 @@
+package com.mycompany.sistema_de_alimentos;
+import javax.swing.*;
+import java.awt.*;
+/**
+ *
+ * @author Jose Miguel
+ */
+public class Ventana_de_Acceso extends JFrame {
+    private JTextField userField;
+    private JPasswordField passField;
+    private JButton loginBtn;
+
+    public Ventana_de_Acceso() {
+        setTitle("Login");
+        setSize(300, 150);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setLocationRelativeTo(null);
+        setLayout(new GridLayout(3, 2));
+
+        add(new JLabel("Usuario:"));
+        userField = new JTextField();
+        add(userField);
+
+        add(new JLabel("Contraseña:"));
+        passField = new JPasswordField();
+        add(passField);
+
+        loginBtn = new JButton("Iniciar Sesión");
+        add(loginBtn);
+        add(new JLabel(""));
+
+        loginBtn.addActionListener(e -> {
+            String user = userField.getText();
+            String pass = new String(passField.getPassword());
+
+            if (user.equals("Jose M") && pass.equals("Octubre31")) {
+                JOptionPane.showMessageDialog(this, "Login exitoso");
+                this.dispose();
+                new Gestion_AlimentosFrame().setVisible(true);
+            } else {
+                JOptionPane.showMessageDialog(this, "Usuario o contraseña incorrectos");
+            }
+        });
+    }
+}
